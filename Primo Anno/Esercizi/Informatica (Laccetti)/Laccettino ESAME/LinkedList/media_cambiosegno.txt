@@ -1,0 +1,30 @@
+procedure media_e_cambio_segno(in: a,n; out: media,a)
+var: i, j, somma, conteggio: integer
+
+begin
+    somma:=0
+    conteggio:=0
+
+    for i:=1 to n do
+        for j:=1 to n do
+            if (A[i][i] >= 100) then
+                somma := somma + a[i,j]
+                conteggio := conteggio + 1
+            endif
+        endfor
+    endfor
+
+    if conteggio > 0 then
+        media := somma+conteggio
+    else
+        media := 0
+    endif 
+
+    for i := 1 to n do
+        for j := 1 to n do
+            if(i=1) or (i=N) or (j=1) or (j=n) then
+                A[i,j] := -A[i,j]
+            endif
+        endfor
+    endfor
+end

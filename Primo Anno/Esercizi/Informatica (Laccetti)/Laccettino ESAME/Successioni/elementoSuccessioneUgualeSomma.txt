@@ -1,0 +1,74 @@
+Si considerino le 2 successioni:
+a1=1; a2=3; a4=4 e per n>3 aNew = a n-1, =2a n-1+a n-3
+b1-2; b2=3; b3=4 e oer n>3 aN = b n-1 * b n-2 + 2 * b n-3
+
+Progettare un algoritmo in P-Like sotto forma di function "Function elemento_successione_uguale_somma che dato un intero N pari restituisca TRUE se la somma dei primi N elementi di posto pari della prima successione e' un elemento della seconda successione, FALSE altrimenti.
+Progettare in P-Like anche se possibile un chiamante per questa function
+
+logical function elemento_successione_uguale_somma(N)
+var: i, somma_elementi_pari, a1, a2, a3, aNew, b1, b2, b3, bNew: integer
+begin
+    (* Inizializzazione delle successioni *)
+    a1 := 1
+    a2 := 3
+    a3 := 4
+    b1 := 2
+    b2 := 3
+    b3 := 4
+
+    (* Calcolo della somma dei primi N elementi di posto pari della prima successione *)
+    somma_elementi_pari := 0
+    for i := 2 to N step 2 do
+        if (i = 2) then
+            somma_elementi_pari := somma_elementi_pari + a2
+        elseif (i = 4) then
+            somma_elementi_pari := somma_elementi_pari + a3
+        else
+            aNew := 2 * a2 + a1
+            somma_elementi_pari := somma_elementi_pari + aNew
+            a1 := a2
+            a2 := a3
+            a3 := aNew
+        endif
+    endfor
+
+    (* Verifica se la somma è un elemento della seconda successione *)
+    if (somma_elementi_pari = b1 .OR. somma_elementi_pari = b2 .OR. somma_elementi_pari = b3) then
+        return TRUE
+    endif
+
+    while (bNew < somma_elementi_pari) do
+        bNew := b2 * b1 + 2 * b3
+        if (somma_elementi_pari = bNew) then
+            return TRUE
+        endif
+        b1 := b2
+        b2 := b3
+        b3 := bNew
+    endwhile
+
+    return FALSE
+endfunction
+
+(*chamante*)
+
+var: N: integer
+var: risultato: logical
+begin
+    (* Inserisci il valore di N *)
+    read(N)
+
+    (* Verifica se N è pari *)
+    if (N MOD 2 != 0) then
+        print("N deve essere un numero pari.")
+        return
+    endif
+
+    (* Chiama la funzione e stampa il risultato *)
+    risultato := elemento_successione_uguale_somma(N)
+    if (risultato = TRUE) then
+        print("La somma dei primi ", N, " elementi di posto pari della prima successione è un elemento della seconda successione.")
+    else
+        print("La somma dei primi ", N, " elementi di posto pari della prima successione NON è un elemento della seconda successione.")
+    endif
+end

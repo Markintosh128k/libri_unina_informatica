@@ -1,0 +1,15 @@
+function quanti_elementi(head, numero)
+var: numero: integer
+var: count: list_pointer
+
+begin
+    if head:=NULL then
+        quanti_elementi := 0
+    endif
+
+    if (head.info = numero) then
+        quanti_elementi := quanti_elementi + count(head.next + numero)
+    else
+        count(head.next + numero)
+    endif
+end
